@@ -5,7 +5,9 @@ edition = "2021"
 
 [dependencies]
 egui = { workspace = true }
-egui_dock = "0.20"
+# Temporary pin until egui_dock releases egui 0.37 support:
+# https://github.com/anhosh/egui_dock/pull/354
+egui_dock = { git = "https://github.com/crumblingstatue/egui_dock", rev = "4bd1dcd90c7a71ed3bf38159f49a2992fa653c2c" }
 eframe = { workspace = true }
 log = { workspace = true }
 egui_term = { path = "../../" }

@@ -3,16 +3,16 @@ members = ["examples/*"]
 
 # dependencies that are shared throughout the workspace (mostly for examples)
 [workspace.dependencies]
-egui = "0.35"
-eframe = { version = "0.35", default-features = false, features = [
+egui = "0.37"
+eframe = { version = "0.37", default-features = false, features = [
     "accesskit",     # Make egui compatible with screen readers. NOTE: adds a lot of dependencies.
     "default_fonts", # Embed the default egui fonts.
-    "wgpu",          # Use the glow rendering backend. Alternative: "wgpu".
+    "wgpu",          # Use the wgpu rendering backend. Alternative: "glow".
     "persistence",   # Enable restoring app state when restarting the app.
 ] }
 env_logger = "0.11.10"
 log = "0.4"
-wgpu = "29" # enables the wgpu default features so we get the default backends
+wgpu = "30" # enables the wgpu default features so we get the default backends
 
 [package]
 name = "egui_term"
@@ -20,7 +20,7 @@ description = "Terminal emulator widget powered by EGUI framework and alacritty 
 authors = ["Ilya Shvyryalkin <ilyashvy@gmail.com>"]
 version = "0.1.0"
 edition = "2021"
-rust-version = "1.92"
+rust-version = "1.95"
 repository = "https://github.com/Harzu/egui_term"
 categories = ["gui"]
 license = "MIT"

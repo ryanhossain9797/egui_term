@@ -66,6 +66,10 @@ struct TabViewer<'a> {
 impl egui_dock::TabViewer for TabViewer<'_> {
     type Tab = Tab;
 
+    fn id(&mut self, tab: &mut Self::Tab) -> egui::Id {
+        egui::Id::unique(("terminal_tab", tab.id))
+    }
+
     fn title(&mut self, tab: &mut Self::Tab) -> egui::WidgetText {
         format!("tab {}", tab.id).into()
     }
