@@ -144,9 +144,13 @@ impl<'a> TerminalView<'a> {
         layout: &Response,
         state: &mut TerminalViewState,
     ) -> Self {
-        if !layout.has_focus() || !layout.contains_pointer() {
+        if !layout.has_focus() {
             return self;
         }
+
+        // Keyboard input only needs focus: a controller or on-screen keyboard user may
+        // have no pointer at all. Mouse input still needs the pointer over the terminal.
+        let pointer_inside = layout.contains_pointer();
 
         let modifiers = layout.ctx.input(|i| i.modifiers);
         let events = layout.ctx.input(|i| i.events.clone());
@@ -165,7 +169,7 @@ impl<'a> TerminalView<'a> {
                         modifiers,
                     ))
                 },
-                egui::Event::MouseWheel { unit, delta, .. } => input_actions
+                egui::Event::MouseWheel { unit, delta, .. } if pointer_inside => input_actions
                     .push(process_mouse_wheel(
                         state,
                         self.font.font_type().size,
@@ -178,7 +182,7 @@ impl<'a> TerminalView<'a> {
                     modifiers,
                     pos,
                     ..
-                } => input_actions.push(process_button_click(
+                } if pointer_inside => input_actions.push(process_button_click(
                     state,
                     layout,
                     self.backend,
@@ -188,7 +192,7 @@ impl<'a> TerminalView<'a> {
                     &modifiers,
                     pressed,
                 )),
-                egui::Event::PointerMoved(pos) => {
+                egui::Event::PointerMoved(pos) if pointer_inside => {
                     input_actions = process_mouse_move(
                         state,
                         layout,
